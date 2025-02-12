@@ -70,7 +70,7 @@ export function Schedule() {
                   <div
                     key={holiday.id}
                     className={cn(
-                      `flex gap-4 cursor-pointer items-center bg-gray-100 px-4 py-2 rounded-lg border`,
+                      `flex gap-4 cursor-pointer items-center bg-gray-100 dark:bg-zinc-900 px-4 py-2 rounded-lg border`,
                       lexendFont.className,
                       borderColor
                     )}

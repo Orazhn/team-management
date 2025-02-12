@@ -16,6 +16,7 @@ import { useGetHolidays } from "@/hooks/database/Holidays/useGetHolidays";
 import { cn } from "@/lib/utils";
 import { Skeleton } from "../ui/skeleton";
 import { useSearch } from "@/hooks/logic/useSearch";
+import NoDataFound from "../noDataFound";
 
 const HolidaysContent = () => {
   const { holidays, isLoading } = useGetHolidays();
@@ -92,36 +93,40 @@ const HolidaysContent = () => {
         </div>
       </div>
       <div className="overflow-auto md:ml-0 sm:left-0 sm:mt-20 sm:absolute md:static md:mt-8 h-[700px] overflow-y-auto w-full">
-        <Table className="">
-          <TableHeader>
-            <TableRow>
-              {holidayHeads.map((head) => (
-                <TableHead key={head} className="w-[60px]">
-                  {head}
-                </TableHead>
-              ))}
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {search.searchData?.map((holiday) => {
-              const isPast = new Date(holiday.date) <= new Date();
-              const borderColor = isPast
-                ? "border-l-gray-500"
-                : "border-l-purple-500";
+        {search.searchData?.length ? (
+          <Table className="">
+            <TableHeader>
+              <TableRow>
+                {holidayHeads.map((head) => (
+                  <TableHead key={head} className="w-[60px]">
+                    {head}
+                  </TableHead>
+                ))}
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {search.searchData.map((holiday) => {
+                const isPast = new Date(holiday.date) <= new Date();
+                const borderColor = isPast
+                  ? "border-l-gray-500"
+                  : "border-l-purple-500";
 
-              return (
-                <TableRow
-                  key={holiday.id}
-                  className={cn("border-l-4 h-14 ", borderColor)}
-                >
-                  <TableCell>{holiday.date}</TableCell>
-                  <TableCell>{holiday.day}</TableCell>
-                  <TableCell>{holiday.holidayName}</TableCell>
-                </TableRow>
-              );
-            })}
-          </TableBody>
-        </Table>
+                return (
+                  <TableRow
+                    key={holiday.id}
+                    className={cn("border-l-4 h-14 ", borderColor)}
+                  >
+                    <TableCell>{holiday.date}</TableCell>
+                    <TableCell>{holiday.day}</TableCell>
+                    <TableCell>{holiday.holidayName}</TableCell>
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
+        ) : (
+          <NoDataFound name="Holidays" />
+        )}
       </div>
     </div>
   );

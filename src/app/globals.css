@@ -135,3 +135,10 @@ body {
   padding: 0.25rem;
   font-weight: 500;
 }
+
+.MuiInputBase-input
+  MuiOutlinedInput-input
+  MuiInputBase-inputAdornedEnd
+  css-1dune0f-MuiInputBase-input-MuiOutlinedInput-input {
+  color: white;
+}

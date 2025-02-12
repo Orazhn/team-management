@@ -18,9 +18,9 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { EmployeesContentFilter } from "./employeesContentFilter";
 import { useDeleteEmployee } from "@/hooks/database/Employee/useDeleteEmployee";
-import { PackageOpen } from "lucide-react";
 import { useSearch } from "@/hooks/logic/useSearch";
 import { useFilter } from "@/hooks/logic/useFilter";
+import NoDataFound from "../noDataFound";
 const EmployeesContent = () => {
   const { employees = [], isLoading } = useGetEmployees();
   const { deleteEmployee, isDeleting } = useDeleteEmployee();
@@ -147,10 +147,7 @@ const EmployeesContent = () => {
           </Table>
         </div>
       ) : (
-        <div className="w-full flex flex-col justify-center items-center gap-4 pt-10">
-          <h1 className="font-bold text-xl">No Employees Found</h1>
-          <PackageOpen size={70} className="text-gray-700" />
-        </div>
+        <NoDataFound name="Employees" />
       )}
     </div>
   );

@@ -23,9 +23,9 @@ export default function TimePickerValue({
             value={value}
             onChange={(newValue) => setValue(newValue)}
             className={
-              "dark:bg-zinc-500 rounded-lg h-10 flex justify-center overflow-hidden"
+              "dark:bg-zinc-600 rounded-lg h-10 flex justify-center overflow-hidden text-white"
             }
-            sx={{ fontStyle: "#173A5E" }}
+            sx={{ color: "white" }}
           />
         </div>
       </DemoContainer>

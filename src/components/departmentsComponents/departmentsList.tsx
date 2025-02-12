@@ -7,6 +7,7 @@ import DepartmentCard from "./departmentCard";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import { AddDepartmentModal } from "@/components/departmentsComponents/addDepartment";
+import NoDataFound from "../noDataFound";
 
 const DepartmentsList = () => {
   const { departments, isLoading } = useGetDepartments();
@@ -30,9 +31,13 @@ const DepartmentsList = () => {
       </div>
 
       <div className="flex gap-5 mt-8 sm:flex-col md:flex-row lg:flex-wrap md:flex-wrap w-full ">
-        {search.searchData?.map((department) => (
-          <DepartmentCard key={department.id} department={department} />
-        ))}
+        {search.searchData?.length ? (
+          search.searchData.map((department) => (
+            <DepartmentCard key={department.id} department={department} />
+          ))
+        ) : (
+          <NoDataFound name="Departments" />
+        )}
       </div>
     </div>
   );

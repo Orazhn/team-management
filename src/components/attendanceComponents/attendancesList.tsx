@@ -11,6 +11,7 @@ import { Search } from "lucide-react";
 import { Table, TableHead, TableHeader } from "@/components/ui/table";
 import { AddAttendance } from "@/components/attendanceComponents/addAttendance";
 import { attendanceStatus } from "@/types/mainEnums";
+import NoDataFound from "../noDataFound";
 
 const AttendancesList = () => {
   const { attendances, isLoading } = useGetAttendances();
@@ -96,37 +97,43 @@ const AttendancesList = () => {
         <AddAttendance />
       </header>
       <div className="overflow-auto md:ml-0 sm:left-0 sm:mt-20 sm:absolute md:static md:mt-8 h-[700px] overflow-y-auto">
-        <Table className="">
-          <TableHeader>
-            <TableRow>
-              {attendanceHeads.map((head) => (
-                <TableHead key={head} className="w-[120px] ">
-                  {head}
-                </TableHead>
-              ))}
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {searchData?.map((attendance, index) => (
-              <TableRow key={index}>
-                <TableCell>{attendance.employeeName}</TableCell>
-                <TableCell>{attendance.designation}</TableCell>
-                <TableCell>{attendance.employeeType}</TableCell>
-                <TableCell>{attendance.checkIn}</TableCell>
-                <TableCell>
-                  <Badge
-                    className={cn(
-                      "rounded-md bg-opacity-10 p-2 text-center",
-                      statusMap[attendance.attendanceStatus as attendanceStatus]
-                    )}
-                  >
-                    {attendance.attendanceStatus}
-                  </Badge>
-                </TableCell>
+        {searchData?.length ? (
+          <Table className="">
+            <TableHeader>
+              <TableRow>
+                {attendanceHeads.map((head) => (
+                  <TableHead key={head} className="w-[120px] ">
+                    {head}
+                  </TableHead>
+                ))}
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+            </TableHeader>
+            <TableBody>
+              {searchData?.map((attendance, index) => (
+                <TableRow key={index}>
+                  <TableCell>{attendance.employeeName}</TableCell>
+                  <TableCell>{attendance.designation}</TableCell>
+                  <TableCell>{attendance.employeeType}</TableCell>
+                  <TableCell>{attendance.checkIn}</TableCell>
+                  <TableCell>
+                    <Badge
+                      className={cn(
+                        "rounded-md bg-opacity-10 p-2 text-center",
+                        statusMap[
+                          attendance.attendanceStatus as attendanceStatus
+                        ]
+                      )}
+                    >
+                      {attendance.attendanceStatus}
+                    </Badge>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        ) : (
+          <NoDataFound name="Attendances" />
+        )}
       </div>
     </div>
   );

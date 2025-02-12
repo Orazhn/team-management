@@ -28,6 +28,7 @@ import { default as MultiSelect } from "react-select";
 import { usePostJob } from "@/hooks/database/Jobs/usePostJob";
 import toast from "react-hot-toast";
 import { useGetJobs } from "@/hooks/database/Jobs/useGetJobs";
+import { useGetMode } from "@/providers/toggleMode";
 
 const lexendFont = Lexend({
   subsets: ["latin"],
@@ -60,6 +61,7 @@ export function AddJob() {
   };
   const { postJob, isPending, isSuccess } = usePostJob();
   const { refetch } = useGetJobs();
+  const theme = useGetMode();
   const isPostEnable =
     jobType && categories && title && salary && categories && location;
 
@@ -171,6 +173,26 @@ export function AddJob() {
             </Select>
           </div>
           <MultiSelect
+            styles={{
+              menu: (styles) => ({
+                ...styles,
+                backgroundColor: theme == "dark" ? "black" : "",
+              }),
+              control: (baseStyles) => ({
+                ...baseStyles,
+                backgroundColor: theme == "dark" ? "black" : "white",
+              }),
+              option: (styles) => {
+                return {
+                  ...styles,
+                  backgroundColor: theme == "dark" ? "#09090b" : "white",
+                  color: theme == "dark" ? "white" : "black",
+                  ":hover": {
+                    backgroundColor: theme == "dark" ? "#27272a" : "#f1f5f9",
+                  },
+                };
+              },
+            }}
             isMulti
             options={categoryOptions}
             className="basic-multi-select text-[16px] shadow-sm rounded-xl"

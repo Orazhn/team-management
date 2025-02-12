@@ -16,6 +16,7 @@ import { AddCandidateModal } from "./addCandidate";
 import { Skeleton } from "../ui/skeleton";
 import { Badge } from "../ui/badge";
 import { candidateStatus } from "@/types/mainEnums";
+import NoDataFound from "../noDataFound";
 
 const candidateHeads = [
   "Candidate Name",
@@ -103,37 +104,41 @@ const CandidatesContent = () => {
         <AddCandidateModal />
       </header>
       <div className="overflow-auto md:ml-0 sm:left-0 sm:mt-20 sm:absolute md:static md:mt-8 h-[700px] overflow-y-auto">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              {candidateHeads.map((head) => (
-                <TableHead key={head} className="w-[120px] ">
-                  {head}
-                </TableHead>
-              ))}
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {searchData?.map((candidate, index) => (
-              <TableRow key={index}>
-                <TableCell>{candidate.candidateName}</TableCell>
-                <TableCell>{candidate.appliedFor}</TableCell>
-                <TableCell>{candidate.appliedDate}</TableCell>
-                <TableCell>{candidate.email}</TableCell>
-                <TableCell>{candidate.mobileNumber}</TableCell>
-                <TableCell>
-                  <Badge
-                    className={
-                      statusMap[candidate.candidateStatus as candidateStatus]
-                    }
-                  >
-                    {candidate.candidateStatus}
-                  </Badge>
-                </TableCell>
+        {searchData?.length ? (
+          <Table>
+            <TableHeader>
+              <TableRow>
+                {candidateHeads.map((head) => (
+                  <TableHead key={head} className="w-[120px] ">
+                    {head}
+                  </TableHead>
+                ))}
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+            </TableHeader>
+            <TableBody>
+              {searchData.map((candidate, index) => (
+                <TableRow key={index}>
+                  <TableCell>{candidate.candidateName}</TableCell>
+                  <TableCell>{candidate.appliedFor}</TableCell>
+                  <TableCell>{candidate.appliedDate}</TableCell>
+                  <TableCell>{candidate.email}</TableCell>
+                  <TableCell>{candidate.mobileNumber}</TableCell>
+                  <TableCell>
+                    <Badge
+                      className={
+                        statusMap[candidate.candidateStatus as candidateStatus]
+                      }
+                    >
+                      {candidate.candidateStatus}
+                    </Badge>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        ) : (
+          <NoDataFound name="Candidates" />
+        )}
       </div>
     </div>
   );

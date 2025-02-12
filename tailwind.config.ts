@@ -20,7 +20,7 @@ export default {
         60: "60",
         100: "100",
         999: "999",
-        9999: "9999", // Add as high as you need
+        9999: "9999",
       },
       colors: {
         main: "#7152F3",

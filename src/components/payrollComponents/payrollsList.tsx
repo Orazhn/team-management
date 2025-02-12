@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import { Table, TableHead, TableHeader } from "@/components/ui/table";
 import { AddPayrollModal } from "./addPayroll";
+import NoDataFound from "../noDataFound";
 
 const payrollHeads = [
   "Employee Name",
@@ -88,40 +89,44 @@ const PayrollsList = () => {
         </div>
       </header>
       <div className="overflow-auto md:ml-0 sm:left-0 sm:mt-20 sm:absolute md:static md:mt-8 h-[700px] overflow-y-auto">
-        <Table className="">
-          <TableHeader>
-            <TableRow>
-              {payrollHeads.map((head) => (
-                <TableHead key={head} className="w-[120px] ">
-                  {head}
-                </TableHead>
-              ))}
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {searchData?.map((payroll, index) => (
-              <TableRow key={index}>
-                <TableCell>{payroll.employeeName}</TableCell>
-                <TableCell>{payroll.ctc}</TableCell>
-                <TableCell>{payroll.salary}</TableCell>
-                <TableCell>
-                  {payroll.deduction !== 0 ? payroll.deduction : "-"}
-                </TableCell>
-                <TableCell>
-                  <Badge
-                    className={cn(
-                      "rounded-md bg-opacity-10 p-2 text-center",
-                      payroll.payrollStatus === "Completed" && "completed",
-                      payroll.payrollStatus === "Pending" && "pending"
-                    )}
-                  >
-                    {payroll.payrollStatus}
-                  </Badge>
-                </TableCell>
+        {searchData?.length ? (
+          <Table className="">
+            <TableHeader>
+              <TableRow>
+                {payrollHeads.map((head) => (
+                  <TableHead key={head} className="w-[120px] ">
+                    {head}
+                  </TableHead>
+                ))}
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+            </TableHeader>
+            <TableBody>
+              {searchData.map((payroll, index) => (
+                <TableRow key={index}>
+                  <TableCell>{payroll.employeeName}</TableCell>
+                  <TableCell>{payroll.ctc}</TableCell>
+                  <TableCell>{payroll.salary}</TableCell>
+                  <TableCell>
+                    {payroll.deduction !== 0 ? payroll.deduction : "-"}
+                  </TableCell>
+                  <TableCell>
+                    <Badge
+                      className={cn(
+                        "rounded-md bg-opacity-10 p-2 text-center",
+                        payroll.payrollStatus === "Completed" && "completed",
+                        payroll.payrollStatus === "Pending" && "pending"
+                      )}
+                    >
+                      {payroll.payrollStatus}
+                    </Badge>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        ) : (
+          <NoDataFound name="Payrolls" />
+        )}
       </div>
     </div>
   );

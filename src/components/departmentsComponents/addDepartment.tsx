@@ -19,12 +19,14 @@ import toast from "react-hot-toast";
 import { default as Select } from "react-select";
 import { Label } from "../ui/label";
 import { useGetEmployees } from "@/hooks/database/Employee/useGetEmployees";
+import { useGetMode } from "@/providers/toggleMode";
 
 const lexendFont = Lexend({
   subsets: ["latin"],
 });
 
 export function AddDepartmentModal() {
+  const theme = useGetMode();
   const [departmentName, setDepartmentName] = useState("");
   const [chosenEmployees, setChosenEmployees] = useState<
     { employeeName: string; employeeId: string }[]
@@ -69,11 +71,15 @@ export function AddDepartmentModal() {
           <DialogTitle>Add New Department</DialogTitle>
         </DialogHeader>
         <div className="flex flex-col gap-4">
-          <Input
-            placeholder="Department Name"
-            value={departmentName}
-            onChange={(e) => setDepartmentName(e.target.value)}
-          />
+          <div>
+            <Label htmlFor="name">Name</Label>
+            <Input
+              placeholder="Department Name"
+              value={departmentName}
+              onChange={(e) => setDepartmentName(e.target.value)}
+            />
+          </div>
+
           <div>
             <Label htmlFor="employees">Employees</Label>
             <Select
@@ -86,9 +92,27 @@ export function AddDepartmentModal() {
                     }))
                   : []
               }
-              className="basic-multi-select text-[16px] shadow-sm rounded-xl"
+              styles={{
+                menu: (styles) => ({
+                  ...styles,
+                  backgroundColor: theme == "dark" ? "black" : "",
+                }),
+                control: (baseStyles) => ({
+                  ...baseStyles,
+                  backgroundColor: theme == "dark" ? "black" : "white",
+                }),
+                option: (styles) => {
+                  return {
+                    ...styles,
+                    backgroundColor: theme == "dark" ? "#09090b" : "white",
+                    color: theme == "dark" ? "white" : "black",
+                    ":hover": {
+                      backgroundColor: theme == "dark" ? "#27272a" : "#f1f5f9",
+                    },
+                  };
+                },
+              }}
               placeholder="Select Employees"
-              classNamePrefix="select"
               value={chosenEmployees.map((e) => ({
                 label: e.employeeName,
                 value: e.employeeId,
