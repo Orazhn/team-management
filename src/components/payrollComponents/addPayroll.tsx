@@ -12,7 +12,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Lexend } from "next/font/google";
 import { cn } from "@/lib/utils";
-import React, { useState } from "react";
+import React, { memo, useState } from "react";
 import toast from "react-hot-toast";
 import { Label } from "../ui/label";
 import { useGetEmployees } from "@/hooks/database/Employee/useGetEmployees";
@@ -33,7 +33,7 @@ const lexendFont = Lexend({
   subsets: ["latin"],
 });
 
-export function AddPayrollModal() {
+function AddPayrollModal() {
   const [salary, setSalary] = useState("");
   const [deduction, setDeduction] = useState("");
   const [status, setStatus] = useState<payrollStatus>();
@@ -177,3 +177,4 @@ export function AddPayrollModal() {
     </Dialog>
   );
 }
+export default memo(AddPayrollModal);

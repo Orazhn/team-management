@@ -13,26 +13,22 @@ import { Input } from "@/components/ui/input";
 import { Building2 } from "lucide-react";
 import { Lexend } from "next/font/google";
 import { cn } from "@/lib/utils";
-import React, { useState } from "react";
+import React, { memo, useState } from "react";
 import { usePostDepartment } from "@/hooks/database/Department/usePostDepartment";
 import toast from "react-hot-toast";
-import { default as Select } from "react-select";
 import { Label } from "../ui/label";
-import { useGetEmployees } from "@/hooks/database/Employee/useGetEmployees";
-import { useGetMode } from "@/providers/toggleMode";
+import EmployeesSelect from "./employeesSelect";
 
 const lexendFont = Lexend({
   subsets: ["latin"],
 });
 
-export function AddDepartmentModal() {
-  const theme = useGetMode();
+function AddDepartmentModal() {
   const [departmentName, setDepartmentName] = useState("");
   const [chosenEmployees, setChosenEmployees] = useState<
     { employeeName: string; employeeId: string }[]
   >([]);
 
-  const { employees, isLoading } = useGetEmployees();
   const { mutateAsync: postDepartmentAsync, isPending } = usePostDepartment();
 
   const addDepartment = async () => {
@@ -80,54 +76,10 @@ export function AddDepartmentModal() {
             />
           </div>
 
-          <div>
-            <Label htmlFor="employees">Employees</Label>
-            <Select
-              isMulti
-              options={
-                employees
-                  ? employees.map((employee) => ({
-                      label: employee.employeeName,
-                      value: employee.employeeId,
-                    }))
-                  : []
-              }
-              styles={{
-                menu: (styles) => ({
-                  ...styles,
-                  backgroundColor: theme == "dark" ? "black" : "",
-                }),
-                control: (baseStyles) => ({
-                  ...baseStyles,
-                  backgroundColor: theme == "dark" ? "black" : "white",
-                }),
-                option: (styles) => {
-                  return {
-                    ...styles,
-                    backgroundColor: theme == "dark" ? "#09090b" : "white",
-                    color: theme == "dark" ? "white" : "black",
-                    ":hover": {
-                      backgroundColor: theme == "dark" ? "#27272a" : "#f1f5f9",
-                    },
-                  };
-                },
-              }}
-              placeholder="Select Employees"
-              value={chosenEmployees.map((e) => ({
-                label: e.employeeName,
-                value: e.employeeId,
-              }))}
-              onChange={(selected) =>
-                setChosenEmployees(
-                  selected.map((s) => ({
-                    employeeName: s.label,
-                    employeeId: s.value,
-                  }))
-                )
-              }
-              isLoading={isLoading}
-            />
-          </div>
+          <EmployeesSelect
+            chosenEmployees={chosenEmployees}
+            setChosenEmployees={setChosenEmployees}
+          />
         </div>
         <DialogFooter className="flex gap-2 w-full justify-center">
           <DialogClose asChild>
@@ -149,3 +101,4 @@ export function AddDepartmentModal() {
     </Dialog>
   );
 }
+export default memo(AddDepartmentModal);

@@ -3,7 +3,7 @@ import React from "react";
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import JobsCard from "./JobsCard";
-import { AddJob } from "@/components/jobsComponents/addJob";
+import AddJob from "@/components/jobsComponents/addJob";
 import { useGetJobs } from "@/hooks/database/Jobs/useGetJobs";
 import { IJob } from "@/types/job";
 import { jobTypes } from "@/types/mainEnums";

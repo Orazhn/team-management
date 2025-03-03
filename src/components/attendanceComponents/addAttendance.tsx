@@ -13,7 +13,7 @@ import { Input } from "@/components/ui/input";
 import { ClipboardCheck } from "lucide-react";
 import { Lexend } from "next/font/google";
 import { cn } from "@/lib/utils";
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import {
   Select,
@@ -36,7 +36,7 @@ const lexendFont = Lexend({
   subsets: ["latin"],
 });
 
-export function AddAttendance() {
+function AddAttendance() {
   const [date, setDate] = useState<Date>();
   const { postAttendance, isPending } = usePostAttendance();
   const [status, setStatus] = useState<attendanceStatus | undefined>();
@@ -230,3 +230,4 @@ export function AddAttendance() {
     </Dialog>
   );
 }
+export default memo(AddAttendance);

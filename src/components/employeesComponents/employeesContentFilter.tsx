@@ -12,12 +12,11 @@ import {
 import { SlidersHorizontal } from "lucide-react";
 import { Lexend } from "next/font/google";
 import { cn } from "@/lib/utils";
-import React, { useState } from "react";
+import React, { useState, memo } from "react";
 import { Label } from "../ui/label";
-import { Checkbox } from "../ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { X } from "lucide-react";
-import { useGetDepartments } from "@/hooks/database/Department/useGetDepartments";
+import dynamic from "next/dynamic";
 
 const lexendFont = Lexend({
   subsets: ["latin"],
@@ -28,20 +27,22 @@ interface IFilter {
   type: string;
 }
 
-export function EmployeesContentFilter({
+const LazyDepartmentFilter = dynamic(() => import("./departmentFilter"), {
+  loading: () => <p>Loading Departments</p>,
+});
+
+function EmployeesContentFilter({
   setFilter,
   clearFilter,
 }: {
   setFilter: React.Dispatch<React.SetStateAction<IFilter>>;
   clearFilter: () => void;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  applyFilter: (data: Record<string, any>[]) => Record<string, any>[];
 }) {
   const [filterData, setFilterData] = useState<IFilter>({
     department: [],
     type: "",
   });
-  const { departments } = useGetDepartments();
 
   return (
     <Dialog>
@@ -60,39 +61,10 @@ export function EmployeesContentFilter({
         <div>
           <div className="space-y-4">
             <Label className="text-base">Department</Label>
-            <div className="grid grid-cols-2 gap-y-3">
-              {departments.map((department) => {
-                const departmentId = String(department.id ?? "");
-                return (
-                  <div
-                    key={departmentId}
-                    className="flex items-center space-x-2"
-                  >
-                    <Checkbox
-                      id={department.name}
-                      checked={filterData.department.includes(department.name)}
-                      onCheckedChange={(checked) => {
-                        setFilterData((prev) => ({
-                          ...prev,
-                          department: checked
-                            ? [...prev.department, department.name]
-                            : prev.department.filter(
-                                (name) => name !== department.name
-                              ),
-                        }));
-                      }}
-                      className="rounded-md border-[#7152F3] data-[state=checked]:bg-[#7152F3] data-[state=checked]:text-white"
-                    />
-                    <Label
-                      htmlFor={department.name}
-                      className="text-sm font-normal"
-                    >
-                      {department.name}
-                    </Label>
-                  </div>
-                );
-              })}
-            </div>
+            <LazyDepartmentFilter
+              filterData={filterData}
+              setFilterData={setFilterData}
+            />
           </div>
         </div>
         <div className="space-y-4">
@@ -144,3 +116,4 @@ export function EmployeesContentFilter({
     </Dialog>
   );
 }
+export default memo(EmployeesContentFilter);

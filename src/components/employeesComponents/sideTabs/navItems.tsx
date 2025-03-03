@@ -1,7 +1,7 @@
 import { User, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Dispatch, ReactNode, SetStateAction } from "react";
-type activeSides = "profile" | "attendance" | "projects" | "leave";
+type activeSides = "profile" | "attendance";
 export default function NavItems({
   activeSide,
   setActiveSide,

@@ -13,7 +13,7 @@ import { Input } from "@/components/ui/input";
 import { UserPen } from "lucide-react";
 import { Lexend } from "next/font/google";
 import { cn } from "@/lib/utils";
-import React, { useState } from "react";
+import { memo, useState } from "react";
 import toast from "react-hot-toast";
 import { Label } from "../ui/label";
 import { format } from "date-fns";
@@ -31,7 +31,7 @@ const lexendFont = Lexend({
   subsets: ["latin"],
 });
 
-export function AddCandidateModal() {
+function AddCandidateModal() {
   const [candidateName, setCandidateName] = useState("");
   const [appliedFor, setAppliedFor] = useState("");
   const [appliedDate, setAppliedDate] = useState<Date>();
@@ -179,3 +179,4 @@ export function AddCandidateModal() {
     </Dialog>
   );
 }
+export default memo(AddCandidateModal);

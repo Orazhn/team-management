@@ -16,11 +16,12 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { EmployeesContentFilter } from "./employeesContentFilter";
+import EmployeesContentFilter from "./employeesContentFilter";
 import { useDeleteEmployee } from "@/hooks/database/Employee/useDeleteEmployee";
 import { useSearch } from "@/hooks/logic/useSearch";
 import { useFilter } from "@/hooks/logic/useFilter";
 import NoDataFound from "../noDataFound";
+
 const EmployeesContent = () => {
   const { employees = [], isLoading } = useGetEmployees();
   const { deleteEmployee, isDeleting } = useDeleteEmployee();
@@ -68,7 +69,6 @@ const EmployeesContent = () => {
           <EmployeesContentFilter
             setFilter={setFilter}
             clearFilter={clearFilter}
-            applyFilter={applyFilter}
           />
         </div>
       </div>

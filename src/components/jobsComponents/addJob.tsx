@@ -22,7 +22,7 @@ import {
 import { Lexend } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { NumberInput } from "../ui/number-input";
-import { useState } from "react";
+import { memo, useState } from "react";
 import { jobTypes } from "@/types/mainEnums";
 import { default as MultiSelect } from "react-select";
 import { usePostJob } from "@/hooks/database/Jobs/usePostJob";
@@ -47,7 +47,7 @@ const colorMap: { [key in jobTypes]: string } = {
   [jobTypes.completed]: "#3FC28A",
 };
 
-export function AddJob() {
+function AddJob() {
   const [salary, setSalary] = useState("");
   const [categories, setCategories] = useState<
     { label: string; value: string }[]
@@ -227,3 +227,5 @@ export function AddJob() {
     </Dialog>
   );
 }
+
+export default memo(AddJob);

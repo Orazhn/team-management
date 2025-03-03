@@ -14,7 +14,7 @@ import { PlusCircle } from "lucide-react";
 import { Lexend } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
-import React, { useState } from "react";
+import React, { memo, useState } from "react";
 import { days } from "@/types/mainEnums";
 import { Label } from "../ui/label";
 import { usePostHoliday } from "@/hooks/database/Holidays/usePostHoliday";
@@ -25,7 +25,7 @@ const lexendFont = Lexend({
   subsets: ["latin"],
 });
 
-export function AddHoliday() {
+function AddHoliday() {
   const [date, setDate] = useState<Date>();
   const [day, setDay] = useState<days>();
   const [name, setName] = useState("");
@@ -117,3 +117,5 @@ export function AddHoliday() {
     </Dialog>
   );
 }
+
+export default memo(AddHoliday);

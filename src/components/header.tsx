@@ -1,6 +1,4 @@
 "use client";
-import { Bell } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { UserButton, useUser } from "@clerk/nextjs";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
@@ -160,9 +158,6 @@ export function Header() {
         </div>
 
         <div className="flex items-center gap-4 w-full sm:w-auto">
-          <Button variant="ghost" size="icon" className="hidden sm:flex">
-            <Bell className="h-5 w-5" />
-          </Button>
           {isLoaded ? (
             <UserButton />
           ) : (

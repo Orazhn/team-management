@@ -6,7 +6,7 @@ import { useSearch } from "@/hooks/logic/useSearch";
 import DepartmentCard from "./departmentCard";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
-import { AddDepartmentModal } from "@/components/departmentsComponents/addDepartment";
+import AddDepartmentModal from "@/components/departmentsComponents/addDepartment";
 import NoDataFound from "../noDataFound";
 
 const DepartmentsList = () => {

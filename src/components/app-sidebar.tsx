@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   BarChart2,
@@ -16,6 +15,7 @@ import { cn } from "@/lib/utils";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import Image from "next/image";
 import { Montserrat } from "next/font/google";
+import Link from "next/link";
 import {
   Sidebar,
   SidebarContent,
@@ -75,12 +75,14 @@ export function AppSidebar() {
       <Sidebar>
         <SidebarContent className="flex flex-col h-full">
           <div className="px-4 py-2 flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <div className="relative h-8 w-8 rounded-full bg-primary">
-                <Image src="/auth-images/icon.png" alt="icon" fill />
+            <Link href={"/dashboard"}>
+              <div className="flex items-center gap-2">
+                <div className="relative h-8 w-8 rounded-full bg-primary">
+                  <Image src="/auth-images/icon.png" alt="icon" fill />
+                </div>
+                <h2 className="text-lg font-semibold">HRMS</h2>
               </div>
-              <h2 className="text-lg font-semibold">HRMS</h2>
-            </div>
+            </Link>
             <SidebarTrigger className="md:hidden" />
           </div>
 

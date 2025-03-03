@@ -1,4 +1,3 @@
-"use client";
 import { AttendanceChart } from "@/components/dashboardComponents/attendance-chart";
 import { AttendanceTable } from "@/components/dashboardComponents/attendance-table";
 import { Schedule } from "@/components/dashboardComponents/schedule";

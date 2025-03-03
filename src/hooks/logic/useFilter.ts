@@ -26,7 +26,10 @@ export function useFilter<T extends Record<string, any>>(initialFilter: {
     [filter]
   );
 
-  const clearFilter = () => setFilter({ department: [], type: "" });
+  const clearFilter = useCallback(
+    () => setFilter({ department: [], type: "" }),
+    []
+  );
 
   return { filter, setFilter, applyFilter, clearFilter };
 }

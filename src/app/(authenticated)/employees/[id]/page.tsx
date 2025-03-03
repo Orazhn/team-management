@@ -15,7 +15,7 @@ import {
   IPersonalInformation,
   IProfessionalInformation,
 } from "@/types/employee";
-export type activeSides = "profile" | "attendance" | "projects" | "leave";
+export type activeSides = "profile" | "attendance";
 
 export default function ProfilePage() {
   const params = useParams();
